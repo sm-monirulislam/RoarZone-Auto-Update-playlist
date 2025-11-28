@@ -1,45 +1,45 @@
-name: 🔁 Auto Playlist Generate (ZIP Protected)
-
-on:
-  workflow_dispatch:
-  schedule:
-    - cron: "0 * * * *"   # প্রতি ১ ঘন্টা পর চলবে
-
-permissions:
-  contents: write
-
-jobs:
-  run:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.10"
-
-      - name: Install Python libraries
-        run: |
-          pip install requests
-
-      - name: Unlock ZIP (run unlock.py)
-        run: |
-          python unlock.py
-        env:
-          ZIP_PASSWORD: ${{ secrets.ZIP_PASSWORD }}
-
-      - name: Run playlist generator
-        run: |
-          python main/generate_playlist.py
-
-      - name: Commit & Push generated files
-        run: |
-          git config --global user.name "Auto Bot"
-          git config --global user.email "bot@example.com"
-          git add RoarZone.m3u
-          git add RoarZone.json
-          git commit -m "Auto update RoarZone files" || echo "No changes"
+name: 🔁 Auto Update RoarZone playlist  
+  
+on:  
+  workflow_dispatch:  
+  schedule:  
+    - cron: "0 * * * *"   # প্রতি ১ ঘন্টা পর চলবে  
+  
+permissions:  
+  contents: write  
+  
+jobs:  
+  run:  
+    runs-on: ubuntu-latest  
+  
+    steps:  
+      - name: Checkout repo  
+        uses: actions/checkout@v4  
+  
+      - name: Setup Python  
+        uses: actions/setup-python@v5  
+        with:  
+          python-version: "3.10"  
+  
+      - name: Install Python libraries  
+        run: |  
+          pip install requests  
+  
+      - name: Unlock ZIP (run unlock.py)  
+        run: |  
+          python unlock.py  
+        env:  
+          ZIP_PASSWORD: ${{ secrets.ZIP_PASSWORD }}  
+  
+      - name: Run playlist generator  
+        run: |  
+          python main/generate_playlist.py  
+  
+      - name: Commit & Push generated files  
+        run: |  
+          git config --global user.name "Auto Bot"  
+          git config --global user.email "bot@example.com"  
+          git add RoarZone.m3u  
+          git add RoarZone.json  
+          git commit -m "Auto update RoarZone files" || echo "No changes"  
           git push
