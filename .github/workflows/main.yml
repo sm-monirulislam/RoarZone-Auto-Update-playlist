@@ -3,7 +3,7 @@ name: 🔁 Auto Playlist Generate (ZIP Protected)
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/20 * * * *"
+    - cron: "0 * * * *"   # প্রতি ১ ঘন্টা পরপর রান হবে
 
 permissions:
   contents: write
@@ -25,9 +25,9 @@ jobs:
         run: |
           pip install requests
 
-      - name: Unlock ZIP (run unzipper.py)
+      - name: Unlock ZIP (run unlock.py)
         run: |
-          python unzipper.py
+          python unlock.py
         env:
           ZIP_PASSWORD: ${{ secrets.ZIP_PASSWORD }}
 
@@ -39,6 +39,6 @@ jobs:
         run: |
           git config --global user.name "Auto Bot"
           git config --global user.email "bot@example.com"
-          git add playlist.m3u
-          git commit -m "Auto update playlist" || echo "No changes"
+          git add RoarZone.m3u
+          git commit -m "Auto update RoarZone.m3u" || echo "No changes to commit"
           git push
