@@ -1,7 +1,7 @@
 name: 📺 Manual Update RoarZone Playlist
 
 on:
-  workflow_dispatch:   # 👉 শুধু হাতে Run হবে
+  workflow_dispatch:
 
 jobs:
   build:
@@ -11,49 +11,31 @@ jobs:
       contents: write
 
     steps:
-      # --------------------------
-      # 1. Checkout repository
-      # --------------------------
       - name: 📦 Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # --------------------------
-      # 2. Setup Python
-      # --------------------------
       - name: 🐍 Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      # --------------------------
-      # 3. Install dependencies
-      # --------------------------
       - name: 📥 Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install aiohttp beautifulsoup4
 
-      # --------------------------
-      # 4. Unlock ZIP (Password Protected)
-      # --------------------------
       - name: 🔓 Unlock ZIP files
         run: |
           python unlock.py
         env:
           ZIP_PASSWORD: ${{ secrets.ZIP_PASSWORD }}
 
-      # --------------------------
-      # 5. Run Playlist Generator
-      # --------------------------
       - name: ▶️ Run playlist generator
         run: |
-          python generate_playlist.py
+          python main/generate_playlist.py
 
-      # --------------------------
-      # 6. Commit & Push
-      # --------------------------
       - name: 💾 Commit and Push
         run: |
           git config user.name "github-actions"
