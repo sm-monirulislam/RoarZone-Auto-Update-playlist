@@ -1,7 +1,9 @@
-name: 📺 Manual Update RoarZone Playlist
+name: 🔁 Auto Update RoarZone playlist
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:          # 👉 হাতে Run করা যাবে
+  schedule:
+    - cron: "0 * * * *"       # 👉 প্রতি ১ ঘন্টায় Auto Run
 
 jobs:
   build:
@@ -26,15 +28,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install aiohttp beautifulsoup4
 
-      - name: 🔓 Unlock ZIP files
+      - name: 🔓 Decrypt ZIP files
         run: |
-          python unlock.py
+          python decrypt.py
         env:
           ZIP_PASSWORD: ${{ secrets.ZIP_PASSWORD }}
 
-      - name: ▶️ Run playlist generator
+      - name: ▶️ Run RoarZone Generator
         run: |
-          python main/generate_playlist.py
+          python main/RoarZone_sm.py
 
       - name: 💾 Commit and Push
         run: |
@@ -46,6 +48,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes"
           else
-            git commit -m "🔄 Manual update RoarZone playlist"
+            git commit -m "🔄 Auto update RoarZone playlist"
             git push
           fi
