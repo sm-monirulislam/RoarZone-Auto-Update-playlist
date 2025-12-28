@@ -3,7 +3,7 @@ name: 🔁 Auto Update RoarZone playlist
 on:
   workflow_dispatch:          # 👉 হাতে Run করা যাবে
   schedule:
-    - cron: "0 */2 * * *"     # 👉 প্রতি ২ ঘন্টায় Auto Run
+    - cron: "0 * * * *"       # 👉 প্রতি ১ ঘন্টায় Auto Run
 
 jobs:
   build:
