@@ -1,5 +1,5 @@
 # RoarZone-Auto-Update-playlist
-# 🚬 Credits
+#🛡️ Credits
 
 [![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&pause=100&color=FF2C10&background=00000000&width=400&lines=Made+By+Monirul+Islam)](https://git.io/typing-svg)
 
