@@ -2,7 +2,7 @@ import zipfile
 import os
 import sys
 
-ZIP_FILE = "main.zip"      # ZIP file name
+ZIP_FILE = "RoarZone_main.zip"      # ZIP file name
 EXTRACT_DIR = "main"       # Extract destination folder
 
 # Read password from GitHub Secrets
