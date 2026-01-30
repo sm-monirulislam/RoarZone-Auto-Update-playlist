@@ -3,7 +3,7 @@ name: 🔁 Auto Update RoarZone playlist
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 * * * *"
+    - cron: "0 * * * *"   # প্রতি ১ ঘন্টা
 
 permissions:
   contents: write
@@ -42,6 +42,6 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add RoarZone.m3u RoarZone.json RoarZone_with_id.json
+          git add RoarZone.m3u RoarZone_data.json
           git commit -m "🔄 Auto update RoarZone playlist" || echo "No changes"
           git push
