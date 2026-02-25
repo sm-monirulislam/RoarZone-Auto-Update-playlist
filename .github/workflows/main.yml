@@ -1,9 +1,9 @@
-name: 🔁 Auto Update RoarZone playlist
+name:  Auto Update RoarZone playlist
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 * * * *"   # প্রতি ১ ঘন্টা
+    - cron: "*/40 * * * *"   # প্রতি ৪০ মিনিট
 
 permissions:
   contents: write
