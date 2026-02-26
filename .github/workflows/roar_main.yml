@@ -3,7 +3,7 @@ name: Auto Update RoarZone playlist
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/30 * * * *"
+    - cron: "0 * * * *"   # প্রতি ১ ঘণ্টা (Hour start এ run করবে)
 
 permissions:
   contents: write
@@ -45,5 +45,5 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
           git add RoarZone.m3u RoarZone_data.json
-          git commit -m "Secure Auto Update - $(date +'%Y-%m-%d %H:%M:%S')" || echo "No changes"
+          git diff --cached --quiet || git commit -m "Secure Auto Update - $(date +'%Y-%m-%d %H:%M:%S')"
           git push
