@@ -1,0 +1,49 @@
+name: Secure RoarZone Update
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/30 * * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  secure-update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install 7zip
+        run: sudo apt-get update && sudo apt-get install -y p7zip-full
+
+      - name: Unzip Python Script (AES256)
+        run: |
+          7z x RoarZone_main.zip -p"${{ secrets.ZIP_PASSWORD }}" -y
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Dependencies
+        run: |
+          pip install aiohttp beautifulsoup4
+
+      - name: Run Python Script
+        run: |
+          python RoarZone_sm.py
+
+      - name: Delete Python Script After Run
+        run: |
+          rm -f RoarZone_sm.py
+
+      - name: Commit & Push Output Files
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git add RoarZone.m3u RoarZone_data.json
+          git commit -m "Secure Auto Update - $(date +'%Y-%m-%d %H:%M:%S')" || echo "No changes"
+          git push
