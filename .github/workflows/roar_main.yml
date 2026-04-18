@@ -2,7 +2,7 @@ name: Auto Update RoarZone playlist
 
 on:
   workflow_dispatch:
-  
+
 permissions:
   contents: write
 
@@ -26,9 +26,10 @@ jobs:
         with:
           python-version: "3.11"
 
+      # ✅ FIXED HERE
       - name: Install Dependencies
         run: |
-          pip install aiohttp beautifulsoup4
+          pip install requests aiohttp beautifulsoup4
 
       - name: Run Python Script
         run: |
